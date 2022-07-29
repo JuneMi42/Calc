@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
 
 
 
-    public static String calc(String input) throws InputException {
+    public static void calc(String input) throws InputException {
         String result = "";
         String[] line = input.split(" ");
         if ( line.length != 3 ) {
@@ -22,25 +21,46 @@ public class Main {
 
         for (int i = 0; i < line.length; i = i + 2) {
             switch (line[i]) {
-                case "I": line[i] = "1"; romanCheck += 1;
-                    break;
-                case "II": line[i] = "2"; romanCheck += 1;
-                    break;
-                case "III": line[i] = "3"; romanCheck += 1;
-                    break;
-                case "IV": line[i] = "4"; romanCheck += 1;
-                    break;
-                case "V": line[i] = "5"; romanCheck += 1;
-                    break;
-                case "VI": line[i] = "6"; romanCheck += 1;
-                    break;
-                case "VII": line[i] = "7"; romanCheck += 1;
-                    break;
-                case "VIII": line[i] = "8"; romanCheck += 1;
-                    break;
-                case "IX": line[i] = "9"; romanCheck += 1;
-                    break;
-                case "X": line[i] = "10"; romanCheck += 1;
+                case "I" -> {
+                    line[i] = "1";
+                    romanCheck += 1;
+                }
+                case "II" -> {
+                    line[i] = "2";
+                    romanCheck += 1;
+                }
+                case "III" -> {
+                    line[i] = "3";
+                    romanCheck += 1;
+                }
+                case "IV" -> {
+                    line[i] = "4";
+                    romanCheck += 1;
+                }
+                case "V" -> {
+                    line[i] = "5";
+                    romanCheck += 1;
+                }
+                case "VI" -> {
+                    line[i] = "6";
+                    romanCheck += 1;
+                }
+                case "VII" -> {
+                    line[i] = "7";
+                    romanCheck += 1;
+                }
+                case "VIII" -> {
+                    line[i] = "8";
+                    romanCheck += 1;
+                }
+                case "IX" -> {
+                    line[i] = "9";
+                    romanCheck += 1;
+                }
+                case "X" -> {
+                    line[i] = "10";
+                    romanCheck += 1;
+                }
             }
         }
 
@@ -65,17 +85,13 @@ public class Main {
         if( a > 10 || a < 1 || b > 10 || b < 1) {
             throw new InputException("Операнд меньше 0 или больше 10");
 
-        } switch (line[1]) {
-            case "+": result += (a + b);
-                break;
-            case "-": result += (a - b);
-                break;
-            case "*": result += (a * b);
-                break;
-            case "/": result += (a / b);
-                break;
-            default:
-                throw new InputException("Не найден оператор выражения (+, -, *, /)");
+        }
+        switch (line[1]) {
+            case "+" -> result += (a + b);
+            case "-" -> result += (a - b);
+            case "*" -> result += (a * b);
+            case "/" -> result += (a / b);
+            default -> throw new InputException("Не найден оператор выражения (+, -, *, /)");
         }
 
         if (romanCheck == 2) {
@@ -85,7 +101,6 @@ public class Main {
             result = getRomanNumb(result);
         }
         System.out.println(result);
-        return result;
     }
 
 
@@ -94,28 +109,21 @@ public class Main {
 
         int inNumber = Integer.parseInt(inNumb);
 
-        String c = "";
         int c1 = inNumber / 100;
         int c2 = inNumber % 100;
 
-        for (int i = 0; i < c1; i++) {
-            c += "C";
-        }
+        String c = "C".repeat(Math.max(0, c1));
 
-        String l = "";
+        StringBuilder l = new StringBuilder();
         int l1 = c2 / 50;
         int l2 = c2 % 50;
 
-        for (int i = 0; i < l1; i++) {
-            l += "L";
-        }
+        l.append("L".repeat(Math.max(0, l1)));
 
-        String x = "";
+        StringBuilder x = new StringBuilder();
         int x1 = l2 / 10;
         int x2 = l2 % 10;
-        for (int i = 0; i < x1; i++) {
-            x += "X";
-        }
+        x.append("X".repeat(Math.max(0, x1)));
 
         String units = switch (x2) {
             case 1 -> "I";
@@ -131,11 +139,11 @@ public class Main {
         };
 
         if (inNumber / 10 == 9) {
-            l = "";
-            x = "XC";
+            l = new StringBuilder();
+            x = new StringBuilder("XC");
         } else if (x1 == 4) {
-            l = "";
-            x = "XL";
+            l = new StringBuilder();
+            x = new StringBuilder("XL");
         }
         return c + l + x + units;
     }
